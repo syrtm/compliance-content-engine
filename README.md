@@ -142,7 +142,7 @@ One real run on 2026-11-11: three live feeds, Groq `openai/gpt-oss-120b`, n8n 2.
 
 The time figures are one person's stopwatch measurement on one news item (the OFSI FAQs item for writing, the OFSI licence item for review), not an average over many items. Treat the 3.6 h as an order-of-magnitude estimate.
 
-Not yet verified end to end: the two Google Sheets nodes writing from n8n. The run above executed in n8n with those two nodes stubbed, and its rows were written to the sheet separately with the same column layout. Connect your own Google credential (step 5) and the first run confirms it.
+Google Sheets step verified separately on 2026-11-11: the unchanged workflow, with its two Google Sheets nodes on an OAuth2 credential, ran against a test spreadsheet (1 item per source). It appended 1 row to `Review` and 2 to `Skipped` with every column mapped by header name; an immediate second run appended nothing. The 12-item run above ran with the two Sheets nodes stubbed, and its rows were written to the sheet with the same column layout.
 
 ## Limits
 
