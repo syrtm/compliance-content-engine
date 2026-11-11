@@ -135,7 +135,7 @@ One real run on 2026-11-11: three live feeds, Groq `openai/gpt-oss-120b`, n8n 2.
 | QA flags raised | 1 of 12, a false positive: the model wrote "16:00" where the source says "16.00" |
 | Second run on the same feeds | 0 of 12 items reprocessed, 0 LLM calls |
 | LLM cost | $0 (Groq free tier) |
-| Approval rate of reviewed drafts | to be measured (needs a human reviewer) |
+| Approved by a human reviewer | 7 of 9 `Review` items (78%): 3 as generated, 4 after one-word edits that removed overstatement ("several" -> "certain", "extending" -> "continuing"). Rejected: 1 duplicate licence item, 1 low-value enforcement termination |
 | Manual baseline: writing the 3 pieces by hand | to be measured (stopwatch, `Metrics!B2:B4`) |
 | Review time per AI draft set | to be measured (`Metrics!B6`) |
 | Estimated hours saved per week | to be measured (`approved x (manual - review) / 60`) |
