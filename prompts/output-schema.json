@@ -28,5 +28,6 @@
     "one_pager_md",
     "relevance_score",
     "relevance_reason"
-  ]
+  ],
+  "additionalProperties": false
 }

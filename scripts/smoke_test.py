@@ -12,8 +12,8 @@ import urllib.error
 import urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-BASE = "https://generativelanguage.googleapis.com/v1beta/openai"  # OpenAI-compatible endpoint
-MODEL = "gemini-flash-latest"  # keep in sync with workflow/code/config.js
+BASE = "https://api.groq.com/openai/v1"  # any OpenAI-compatible endpoint; keep in sync with Config
+MODEL = "openai/gpt-oss-120b"  # keep in sync with workflow/code/config.js
 
 # A real item from the UK OFSI feed (fetched 2026-11-11).
 NEWS = {
@@ -28,14 +28,15 @@ def api_key():
     env = ROOT / ".env"
     if env.exists():
         for line in env.read_text(encoding="utf-8").splitlines():
-            if line.startswith("GEMINI_API_KEY=") and line.split("=", 1)[1].strip():
+            if line.startswith("LLM_API_KEY=") and line.split("=", 1)[1].strip():
                 return line.split("=", 1)[1].strip()
-    sys.exit("GEMINI_API_KEY is missing. Copy .env.example to .env and fill it in.")
+    sys.exit("LLM_API_KEY is missing. Copy .env.example to .env and fill it in.")
 
 
 def call(url, body=None):
     req = urllib.request.Request(url, data=json.dumps(body).encode() if body else None,
-                                 headers={"Content-Type": "application/json", "Authorization": f"Bearer {api_key()}"})
+                                 headers={"Content-Type": "application/json", "Authorization": f"Bearer {api_key()}",
+                                          "User-Agent": "compliance-content-engine-smoke-test/1.0"})
     try:
         with urllib.request.urlopen(req, timeout=60) as r:
             return json.load(r)

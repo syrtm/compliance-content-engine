@@ -2,6 +2,10 @@
 const SYSTEM_PROMPT = __SYSTEM_PROMPT__;
 const OUTPUT_SCHEMA = __OUTPUT_SCHEMA__;
 
+const cfg = $('Config').first().json;
+// Stay under the provider's tokens-per-minute limit.
+if (cfg.pauseSeconds) await new Promise((resolve) => setTimeout(resolve, cfg.pauseSeconds * 1000));
+
 const n = $input.first().json;
 const userText = [
   'NEWS ITEM',
@@ -17,7 +21,7 @@ return [
       ...n,
       t0: Date.now(),
       body: {
-        model: $('Config').first().json.model,
+        model: cfg.model,
         temperature: 0.2,
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },

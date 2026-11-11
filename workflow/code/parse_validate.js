@@ -41,6 +41,8 @@ const score = Number(out.relevance_score);
 if (!Number.isInteger(score) || score < 0 || score > 10) flags.push('score_out_of_range');
 if (words(out.linkedin_post) > 120) flags.push(`linkedin_over_120_words(${words(out.linkedin_post)})`);
 if (words(out.newsletter_blurb) > 60) flags.push(`newsletter_over_60_words(${words(out.newsletter_blurb)})`);
+const takeaways = String(out.linkedin_post || '').split('\n').filter((l) => /^\s*- /.test(l)).length;
+if (takeaways !== 3) flags.push(`linkedin_takeaways_not_3_lines(${takeaways})`);
 for (const h of ['## What happened', '## Who is affected', '## 3 actions for compliance teams']) {
   if (!String(out.one_pager_md || '').includes(h)) flags.push(`one_pager_missing_section(${h.slice(3)})`);
 }

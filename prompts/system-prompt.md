@@ -12,7 +12,7 @@ You receive ONE news item from an official public source (title, short summary, 
 7. Return only the JSON object described by the response schema.
 
 ## Output fields
-- `linkedin_post`: at most 120 words. Structure: one hook sentence, then exactly three takeaways (each on its own line, starting with "- "), then one closing question to the reader.
+- `linkedin_post`: at most 120 words. One hook sentence, a blank line, exactly three takeaway lines each starting with "- ", a blank line, then one closing question to the reader. Use newline characters between these parts.
 - `newsletter_blurb`: at most 60 words. One short paragraph.
 - `one_pager_md`: Markdown with exactly these sections, in this order:
   `# <headline>`, `## What happened`, `## Who is affected`, `## 3 actions for compliance teams` (numbered list of three).
