@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "properties": {
+    "linkedin_post": {
+      "type": "string",
+      "description": "Max 120 words. Hook sentence, three takeaways each on its own line starting with '- ', then one closing question. No URLs."
+    },
+    "newsletter_blurb": {
+      "type": "string",
+      "description": "Max 60 words. One short paragraph. No URLs."
+    },
+    "one_pager_md": {
+      "type": "string",
+      "description": "Markdown: '# headline', '## What happened', '## Who is affected', '## 3 actions for compliance teams' (numbered list of three). No URLs."
+    },
+    "relevance_score": {
+      "type": "integer",
+      "description": "0-10. Importance for compliance teams at banks and fintechs."
+    },
+    "relevance_reason": {
+      "type": "string",
+      "description": "One sentence, max 30 words, explaining the score."
+    }
+  },
+  "required": [
+    "linkedin_post",
+    "newsletter_blurb",
+    "one_pager_md",
+    "relevance_score",
+    "relevance_reason"
+  ]
+}
