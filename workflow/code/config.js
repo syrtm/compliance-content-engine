@@ -2,8 +2,10 @@
 const config = {
   // Google Sheet that receives the output (the long ID from the sheet URL).
   spreadsheetId: 'YOUR_SPREADSHEET_ID',
-  // Gemini model. List the models your key can use:
-  //   GET https://generativelanguage.googleapis.com/v1beta/models?key=...
+  // Any OpenAI-compatible chat completions endpoint. Default: Google Gemini.
+  // To switch provider, change baseUrl + model and the Bearer credential.
+  llmBaseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai',
+  // List the models your key can use: python scripts/smoke_test.py --models
   model: 'gemini-flash-latest',
   // Items older than this are ignored (keeps the first run small).
   maxAgeDays: 30,

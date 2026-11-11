@@ -54,9 +54,9 @@ nodes = [
     code_node("Build Prompt", [1540, 100], build_prompt),
     node("Generate Content (LLM)", "n8n-nodes-base.httpRequest", 4.5, [1760, 100], {
         "method": "POST",
-        "url": "=https://generativelanguage.googleapis.com/v1beta/models/{{ $('Config').first().json.model }}:generateContent",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "googlePalmApi",
+        "url": "={{ $('Config').first().json.llmBaseUrl }}/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
         "sendBody": True,
         "specifyBody": "json",
         "jsonBody": "={{ JSON.stringify($json.body) }}",

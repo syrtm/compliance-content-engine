@@ -27,11 +27,11 @@ const row = {
 
 let out;
 try {
-  const text = res.candidates[0].content.parts.map((p) => p.text || '').join('');
+  const text = res.choices[0].message.content;
   out = JSON.parse(text);
 } catch (e) {
   row.status = 'error';
-  row.qa_flags = `llm_error: ${String((res.error && (res.error.message || res.error)) || e.message).slice(0, 200)}`;
+  row.qa_flags = `llm_error: ${String((res.error && (res.error.message || JSON.stringify(res.error))) || e.message).slice(0, 200)}`;
   return [{ json: row }];
 }
 

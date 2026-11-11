@@ -42,7 +42,7 @@ One workflow, 12 nodes, no database, no UI.
 | Trigger | Schedule Trigger, daily at 07:00. Run it by hand any time with **Execute workflow**. |
 | Sources | Three public feeds, verified live on 2026-11-11 (table below). Add one by adding a line in the `Config` node. |
 | Dedupe | n8n's Remove Duplicates node in "items processed in previous executions" mode, keyed on the article link. History lives in n8n's own data. |
-| LLM | Google Gemini over plain HTTP with a response schema, so the answer is always the same JSON shape. Prompt and schema are in [`prompts/`](prompts/). |
+| LLM | Google Gemini through its OpenAI-compatible endpoint, with a strict JSON schema so the answer always has the same shape. Any OpenAI-compatible provider works by changing the URL and model in `Config`. Prompt and schema are in [`prompts/`](prompts/). |
 | QA | Code checks after the model: word limits, required sections, score range, and every number in the draft must exist in the source text. Problems are written to `qa_flags`. |
 | Source link | Appended by code, not by the model, so it cannot be missing or altered. |
 | Filter | `relevance_score >= 6` goes to `Review`, everything else to `Skipped` with the reason. |
@@ -71,6 +71,8 @@ cp .env.example .env
 ```
 
 On Windows PowerShell use `Copy-Item .env.example .env`. Put your Gemini key in `.env` (get one at https://aistudio.google.com/apikey). `.env` is git-ignored.
+
+> Free tier: create the key in a Google Cloud project **without** billing attached. A project with prepaid billing and no credit left returns `402 RESOURCE_EXHAUSTED`.
 
 **2. Smoke-test the prompt (no n8n needed)**
 
@@ -102,7 +104,7 @@ Open http://localhost:5678.
 
 1. **Workflows -> Import from File** -> `workflow/compliance-content-engine.json`.
 2. Open the `Config` node and replace `YOUR_SPREADSHEET_ID`.
-3. Open `Generate Content (LLM)` -> create a **Google Gemini(PaLM) Api** credential with your key.
+3. Open `Generate Content (LLM)` -> create a **Bearer Auth** credential and paste your Gemini key as the token.
 4. Open `Append to Review` and `Append to Skipped` -> create a Google Sheets credential. On self-hosted n8n the simplest route is a **Service Account**: enable the Google Sheets API in a Google Cloud project, create a service account key, switch the node's *Authentication* to Service Account, and share the sheet with the service account's email as Editor. On n8n Cloud, OAuth sign-in works in one click.
 5. Click **Execute workflow**. Rows appear in `Review` and `Skipped`.
 6. Click it again. `Skip Already Processed` should pass 0 items.

@@ -17,12 +17,15 @@ return [
       ...n,
       t0: Date.now(),
       body: {
-        systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
-        contents: [{ role: 'user', parts: [{ text: userText }] }],
-        generationConfig: {
-          temperature: 0.2,
-          responseMimeType: 'application/json',
-          responseSchema: OUTPUT_SCHEMA,
+        model: $('Config').first().json.model,
+        temperature: 0.2,
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'user', content: userText },
+        ],
+        response_format: {
+          type: 'json_schema',
+          json_schema: { name: 'content_drafts', strict: true, schema: OUTPUT_SCHEMA },
         },
       },
     },
