@@ -136,9 +136,11 @@ One real run on 2026-11-11: three live feeds, Groq `openai/gpt-oss-120b`, n8n 2.
 | Second run on the same feeds | 0 of 12 items reprocessed, 0 LLM calls |
 | LLM cost | $0 (Groq free tier) |
 | Approved by a human reviewer | 7 of 9 `Review` items (78%): 3 as generated, 4 after one-word edits that removed overstatement ("several" -> "certain", "extending" -> "continuing"). Rejected: 1 duplicate licence item, 1 low-value enforcement termination |
-| Manual baseline: writing the 3 pieces by hand | to be measured (stopwatch, `Metrics!B2:B4`) |
-| Review time per AI draft set | to be measured (`Metrics!B6`) |
-| Estimated hours saved per week | to be measured (`approved x (manual - review) / 60`) |
+| Manual baseline: writing the 3 pieces by hand, one item | 35 min (LinkedIn 12, newsletter 5, one-pager 18), including reading the source |
+| Reviewing and editing one AI draft set | 4 min |
+| Estimated time saved in the measured week | 3.6 h: 7 approved items x (35 - 4) min / 60 |
+
+The time figures are one person's stopwatch measurement on one news item (the OFSI FAQs item for writing, the OFSI licence item for review), not an average over many items. Treat the 3.6 h as an order-of-magnitude estimate.
 
 Not yet verified end to end: the two Google Sheets nodes writing from n8n. The run above executed in n8n with those two nodes stubbed, and its rows were written to the sheet separately with the same column layout. Connect your own Google credential (step 5) and the first run confirms it.
 
@@ -151,7 +153,7 @@ Found by reading all 12 outputs against their source items:
 - **Inconsistent scoring.** Two near-identical Federal Reserve "termination of enforcement action" items scored 3 and 6, so one went to `Review` and one to `Skipped`. The score has not been calibrated against human ratings.
 - **Near-duplicates are not merged.** OFSI published the same legal-services licence as two entries; both were processed. Four of the nine `Review` items were similar EU "alignment" statements. Dedupe is on the link only.
 - **A failed item is not retried on the next run.** It is marked as seen before the LLM call; it lands in `Skipped` with `status = error` so it stays visible.
-- **The time-saved figure will be an estimate** from one person's stopwatch baseline, not a controlled study.
+- **The time-saved figure is an estimate** from one person timing one item, not a controlled study. Writing time varies a lot between items and writers.
 - **Free-tier rate limits.** Groq allows 8,000 tokens per minute and one item uses about 1,800, hence the 15 s pause. Each source is capped at 6 items per run.
 - **English only.**
 
